@@ -15,7 +15,7 @@ class IntroScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.only(left: 20, right: 20),
               child: Image.asset(
-                'lib/core/assets/images/BMI_image.png',
+                'assets/images/BMI_image.png',
                 width: 450,
                 height: 450,
               ),
