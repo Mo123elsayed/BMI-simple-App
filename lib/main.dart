@@ -9,6 +9,8 @@ void main() {
 /// we use context to access the widget tree
 /// and to get the current state of the widget
 class FirstApp extends StatelessWidget {
+  const FirstApp({super.key});
+
   // const MyApp({super.key});
 
   // This widget is the root of your application.
