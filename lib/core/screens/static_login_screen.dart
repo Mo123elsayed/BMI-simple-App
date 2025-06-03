@@ -11,8 +11,10 @@ class StaticLoginScreen extends StatefulWidget {
 }
 
 class _StaticLoginScreenState extends State<StaticLoginScreen> {
+  TextEditingController heightController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
   String selectedGender = '';
-  String value = '';
+  // String value = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +92,28 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
               ),
             ],
           ),
+          SizedBox(height: 25),
+          buildRangeButton("Your Height (cm)", heightController),
+          SizedBox(height: 25),
+          buildRangeButton("Your Weight (kg)", weightController),
+          SizedBox(height: 25),
+          Container(
+            // padding: EdgeInsets.all(4),
+            margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Color(0xFF484783),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Calculate BMI',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+          ),
+          // SizedBox(height: 3),
         ],
       ),
     );
@@ -107,9 +131,17 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.deepPurple, width: 2.0),
+          border: Border.all(
+            color: selectedGender == value
+                ? Colors.deepPurple
+                : Colors.transparent,
+            width: 2.0,
+          ),
         ),
-        child: ClipRRect(borderRadius: BorderRadius.circular(10.0), child: image),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: image,
+        ),
       ),
     );
   }
@@ -142,6 +174,72 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
           prefixIcon: icon,
         ),
         style: TextStyle(fontSize: 16.0),
+      ),
+    );
+  }
+
+  /// method to return range buttons for height and weight
+  /// using TextEditingController to manage the text input
+  Widget buildRangeButton(String label, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "$label",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[800],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xF0EAEAFE),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            height: 60,
+            child: TextFormField(
+              textAlign: TextAlign.center,
+              controller: controller,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelStyle: TextStyle(),
+                filled: true,
+                fillColor: Color.fromRGBO(179, 178, 234, 0.15),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 18.0,
+                  horizontal: 20.0,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide.none,
+                ),
+                prefixIcon: GestureDetector(
+                  onTap: () {
+                    if (controller.text.isNotEmpty) {
+                      int currentValue = int.parse(controller.text);
+                      currentValue -= 1;
+                      controller.text = currentValue.toString();
+                    }
+                  },
+                  child: Icon(Icons.remove),
+                ),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    int currentValue = int.parse(controller.text);
+                    currentValue += 1;
+                    controller.text = currentValue.toString();
+                  },
+                  child: Icon(Icons.add),
+                ),
+              ),
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -70,13 +70,15 @@ class IntroScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: 17),
                   ),
                 ),
+                SizedBox(height: 20),
                 SizedBox(
                   height: 20,
                   width: 350,
                   child: Divider(color: Colors.white),
                 ),
+                SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.all(5),
+                  // padding: EdgeInsets.all(5),
                   margin: EdgeInsets.only(
                     top: 20,
                     left: 10,
