@@ -1,4 +1,4 @@
-import 'package:first_app/core/screens/result_screen.dart';
+import 'package:first_app/features/BMI_calculation/presentation/ui_screens/result_screen.dart';
 import 'package:flutter/material.dart';
 
 class StaticLoginScreen extends StatefulWidget {
@@ -100,7 +100,7 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
           buildRangeButton("Your Weight (kg)", weightController),
           SizedBox(height: 25),
           Container(
-            margin: EdgeInsets.only(top: 15, left: 35, right: 35),
+            margin: EdgeInsets.only(top: 35, left: 35, right: 35),
             width: double.infinity,
             decoration: BoxDecoration(
               color: Color(0xFF484783),

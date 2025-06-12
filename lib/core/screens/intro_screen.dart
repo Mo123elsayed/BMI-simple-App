@@ -1,13 +1,15 @@
 import 'package:first_app/core/screens/static_login_screen.dart';
 import 'package:flutter/material.dart';
-
+/// This screen is the introduction screen for the app.
 class IntroScreen extends StatelessWidget {
-  static const routeName = '/intro';
+  /// The route name for the intro screen
+  static const screenRoute = '/intro';
 
   const IntroScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    /// This method builds the intro screen UI.
     return Scaffold(
       body: Stack(
         children: [

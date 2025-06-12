@@ -1,3 +1,4 @@
+import 'package:first_app/core/screens/intro_screen.dart';
 import 'package:first_app/core/themes/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -243,9 +244,13 @@ class ResultScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(
+                      context,
+                    ).pushReplacementNamed(IntroScreen.screenRoute);
+                  },
                   child: Text(
-                    'Calculate BMI',
+                    'Calculate BMI Again',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
