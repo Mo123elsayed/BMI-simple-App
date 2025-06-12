@@ -1,3 +1,4 @@
+import 'package:first_app/core/screens/result_screen.dart';
 import 'package:first_app/core/screens/static_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'core/screens/intro_screen.dart';
@@ -27,6 +28,7 @@ class FirstApp extends StatelessWidget {
       routes: {
         '/': (ctx) => IntroScreen(),
         StaticLoginScreen.screenRoute: (context) => StaticLoginScreen(),
+        ResultScreen.screenRoute:(context)=> ResultScreen(),
       },
     );
   }

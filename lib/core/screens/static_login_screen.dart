@@ -1,3 +1,4 @@
+import 'package:first_app/core/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 
 class StaticLoginScreen extends StatefulWidget {
@@ -13,8 +14,8 @@ class StaticLoginScreen extends StatefulWidget {
 class _StaticLoginScreenState extends State<StaticLoginScreen> {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
+
   String selectedGender = '';
-  // String value = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +41,9 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
           ),
           SizedBox(height: 25),
           buildFormField(
-            labelText: 'Birth Date',
+            labelText: 'Age',
             icon: Icon(Icons.calendar_today, color: Colors.black),
+            // input: TextInputType.number,
           ),
           SizedBox(height: 25),
           Text(
@@ -98,15 +100,16 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
           buildRangeButton("Your Weight (kg)", weightController),
           SizedBox(height: 25),
           Container(
-            // padding: EdgeInsets.all(4),
-            margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+            margin: EdgeInsets.only(top: 15, left: 35, right: 35),
             width: double.infinity,
             decoration: BoxDecoration(
               color: Color(0xFF484783),
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(ResultScreen.screenRoute);
+              },
               child: Text(
                 'Calculate BMI',
                 style: TextStyle(color: Colors.white, fontSize: 20),
@@ -147,18 +150,23 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
   }
 
   /// method to return form fields
-  Widget buildFormField({String? labelText, Widget? icon}) {
+  Widget buildFormField({
+    String? labelText,
+    Widget? icon,
+    // TextInputType? input,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(left: 25.0, right: 25.0),
 
       /// using TextFormField to create a form field
       child: TextFormField(
+        // keyboardType: input!,
         decoration: InputDecoration(
-          labelText: '${labelText}',
+          labelText: '$labelText',
           labelStyle: TextStyle(color: Colors.grey[700], fontSize: 16),
           floatingLabelStyle: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
           filled: true,
@@ -187,7 +195,7 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "$label",
+            label,
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[800],
@@ -206,7 +214,6 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
               controller: controller,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelStyle: TextStyle(),
                 filled: true,
                 fillColor: Color.fromRGBO(179, 178, 234, 0.15),
                 contentPadding: EdgeInsets.symmetric(
