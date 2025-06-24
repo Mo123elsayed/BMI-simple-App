@@ -1,3 +1,4 @@
+import 'package:first_app/features/BMI_calculation/presentation/components/models/bmi_model.dart';
 import 'package:first_app/features/BMI_calculation/presentation/ui_screens/intro_screen.dart';
 import 'package:first_app/core/themes/app_color.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,12 @@ class ResultScreen extends StatefulWidget {
   final double? height;
   final double? weight;
 
-  const ResultScreen({super.key, 
-    this.fullName,this.age,this.height,this.weight,
+  const ResultScreen({
+    super.key,
+    this.fullName,
+    this.age,
+    this.height,
+    this.weight,
   });
 
   @override
@@ -29,13 +34,21 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     bmiResult = context.read<BMiCalcCubit>().calculateBMI(
       height: widget.height!,
       weight: widget.weight!,
     );
+
     name = context.read<BMiCalcCubit>().getName(name: widget.fullName!);
     age = context.read<BMiCalcCubit>().getAge(age: widget.age!);
-    super.initState();
+
+    ///
+    context.read<BMiCalcCubit>().getBmiData(
+      height: widget.height!,
+      weight: widget.weight!,
+    );
   }
 
   @override
@@ -60,47 +73,204 @@ class _ResultScreenState extends State<ResultScreen> {
         ),
         backgroundColor: Color(0xFF7876CD),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            // left: 15.0,
-            top: 45,
-            bottom: 20,
-          ),
-          child: Column(
-            children: [
-              Container(
-                height: 300,
-                width: 350,
-                // width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Color(0xFF7876CD),
-                  borderRadius: BorderRadius.circular(20),
+      body: BlocConsumer<BMiCalcCubit, BMiCalcState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          if (state is BMiCalcLoading) {
+            return Center(
+              child: CircularProgressIndicator(color: Colors.black),
+            );
+          }
+          if (state is BMiCalcFailure) {
+            return Center(
+              child: Text(
+                state.messageError,
+                style: TextStyle(color: Colors.red, fontSize: 18),
+              ),
+            );
+          }
+          if (state is BMiCalcSuccess) {
+            final bmiModel = state.bmiModel;
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  // left: 15.0,
+                  top: 45,
+                  bottom: 20,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
+                    Container(
+                      height: 300,
+                      width: 350,
+                      // width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF7876CD),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(top: 30),
+                                  child: Text(
+                                    name,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      letterSpacing: 1.5,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 20),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'A $age years old!',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        bmiResult.toStringAsFixed(2),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        'BMI Calc',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              '${widget.height} cm',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 23,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              'Height',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(width: 20),
+                                      Container(
+                                        width: 1,
+                                        height: 50,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: 20),
+                                      Column(
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              '${widget.weight} kg',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 23,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              'Weight',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 30),
+                          Container(
+                            padding: EdgeInsets.only(right: 5),
+                            alignment: Alignment.centerRight,
+                            child: Image.asset(
+                              'assets/images/body.png',
+                              // height: 280,
+                              // width: 83.6,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                    buildContentMethod(
+                      color: Color(0xFF01502E),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            padding: EdgeInsets.only(top: 30),
+                            padding: EdgeInsets.only(left: 8, top: 7),
+                            alignment: Alignment.centerLeft,
                             child: Text(
-                              name,
+                              state.bmiModel.risk,
                               style: TextStyle(
                                 color: Colors.white,
-                                letterSpacing: 1.5,
                                 fontSize: 22,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 1.5,
                               ),
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 20),
+                            padding: EdgeInsets.only(left: 8),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'A $age years old male',
+                              state.bmiModel.summary,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
@@ -108,200 +278,68 @@ class _ResultScreenState extends State<ResultScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
-                          Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  bmiResult.toStringAsFixed(2),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
+                          SizedBox(height: 7),
+                          Container(
+                            padding: EdgeInsets.only(left: 8, right: 8),
+                            child: Text(
+                              state.bmiModel.recommendation,
+                              style: TextStyle(
+                                overflow: TextOverflow.fade,
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
                               ),
-                              Container(
-                                child: Text(
-                                  'BMI Calc',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        '${widget.height} cm',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 23,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        'Height',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 20),
-                                Container(
-                                  width: 1,
-                                  height: 50,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 20),
-                                Column(
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        '${widget.weight} kg',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 23,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        'Weight',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(height: 30),
+
                     Container(
-                      padding: EdgeInsets.only(right: 5),
-                      alignment: Alignment.centerRight,
-                      child: Image.asset(
-                        'assets/images/body.png',
-                        // height: 280,
-                        // width: 83.6,
+                      // padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
+                      margin: EdgeInsets.only(top: 15, left: 35, right: 35),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF484783),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(IntroScreen.screenRoute);
+                        },
+                        child: Text(
+                          'Calculate BMI Again',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
-              SizedBox(height: 25),
-              buildContentMethod(
-                color: Color(0xFF01502E),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 8, top: 7),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Under Weight',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 8),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Your BMI is less than 18.5',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 7),
-                    Container(
-                      padding: EdgeInsets.only(left: 8, right: 8),
-                      child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                        'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-                        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-                        'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
-                        'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                        style: TextStyle(
-                          overflow: TextOverflow.fade,
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-              Container(
-                // padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
-                margin: EdgeInsets.only(top: 15, left: 35, right: 35),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color(0xFF484783),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(
-                      context,
-                    ).pushReplacementNamed(IntroScreen.screenRoute);
-                  },
-                  child: Text(
-                    'Calculate BMI Again',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-            ],
-          ),
-        ),
+            );
+          }
+          return Center(
+            child: Text(
+              'No data available,try again later.',
+              style: TextStyle(color: Colors.red, fontSize: 18),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Container buildContentMethod({Widget? child, Color? color}) {
+  Widget buildContentMethod({Widget? child, Color? color}) {
     return Container(
       padding: EdgeInsets.all(10),
-      height: 320,
       width: 350,
       decoration: BoxDecoration(
         color: color,

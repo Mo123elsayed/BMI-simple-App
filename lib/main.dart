@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' show BlocProvider;
 import 'features/BMI_calculation/presentation/ui_screens/intro_screen.dart';
 
 void main() {
-  runApp(FirstApp());
+  runApp(BlocProvider(create: (context) => BMiCalcCubit(), child: FirstApp()));
 }
 
 /// we use context to access the widget tree
@@ -29,7 +29,7 @@ class FirstApp extends StatelessWidget {
       ),
       routes: {
         '/': (ctx) => IntroScreen(),
-        // StaticLoginScreen.screenRoute: (context) => StaticLoginScreen(),
+        StaticLoginScreen.screenRoute: (context) => StaticLoginScreen(),
         ResultScreen.screenRoute: (context) => BlocProvider(
           create: (context) => BMiCalcCubit(),
           child: ResultScreen(),

@@ -1,5 +1,6 @@
 import 'package:first_app/features/BMI_calculation/presentation/ui_screens/static_login_screen.dart';
 import 'package:flutter/material.dart';
+
 /// This screen is the introduction screen for the app.
 class IntroScreen extends StatelessWidget {
   /// The route name for the intro screen
@@ -11,18 +12,17 @@ class IntroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     /// This method builds the intro screen UI.
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SizedBox(height: 100),
-
-              // SizedBox(height: 100),
               Container(
                 // height: ,
                 decoration: BoxDecoration(
-                  color: Color(0xFF7876CD),
+                  color: Color.fromARGB(255, 43, 43, 43),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(25),
                     topLeft: Radius.circular(25),
@@ -100,12 +100,12 @@ class IntroScreen extends StatelessWidget {
             ],
           ),
           Positioned(
-            top: 150,
+            top: MediaQuery.of(context).size.height * 0.11,
             child: Container(
               decoration: BoxDecoration(),
               child: Image.asset(
                 'assets/images/BMI_image.png',
-                width: 450,
+                width: 400,
                 height: 450,
               ),
             ),

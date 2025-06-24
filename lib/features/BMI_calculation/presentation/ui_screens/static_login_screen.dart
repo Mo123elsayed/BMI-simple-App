@@ -1,11 +1,9 @@
-import 'package:first_app/features/BMI_calculation/presentation/controllers/bmi_calc_cubit/cubit/bmi_calc_cubit.dart';
 import 'package:first_app/features/BMI_calculation/presentation/ui_screens/result_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StaticLoginScreen extends StatefulWidget {
   // const StaticLoginScreen({super.key});
-  static const screenRoute = '/';
+  static const screenRoute = '/login';
 
   const StaticLoginScreen({super.key});
 
@@ -20,6 +18,8 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String selectedGender = '';
   @override
   Widget build(BuildContext context) {
@@ -37,109 +37,112 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 100),
-          buildFormField(
-            labelText: 'Name',
-            icon: Icon(Icons.person, color: Colors.black),
-          ),
-          SizedBox(height: 25),
-          buildFormField(
-            labelText: 'ageController',
-            icon: Icon(Icons.calendar_today, color: Colors.black),
-            // input: TextInputType.number,
-          ),
-          SizedBox(height: 25),
-          Text(
-            "Choose Gender",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Column(
             children: [
-              Column(
+              SizedBox(height: 100),
+              buildFormField(
+                labelText: 'Name',
+                icon: Icon(Icons.person, color: Colors.black),
+                controller: nameController,
+              ),
+              SizedBox(height: 25),
+              buildFormField(
+                labelText: 'Age',
+                icon: Icon(Icons.calendar_today, color: Colors.black),
+                controller: ageController,
+                // input: TextInputType.number,
+              ),
+              SizedBox(height: 25),
+              Text(
+                "Choose Gender",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildGenderImage(
-                    image: Image.asset('assets/images/male.png'),
-                    value: 'male',
+                  Column(
+                    children: [
+                      buildGenderImage(
+                        image: Image.asset('assets/images/male.png'),
+                        value: 'male',
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "male",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    "male",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Column(
+                    children: [
+                      buildGenderImage(
+                        image: Image.asset('assets/images/female.png'),
+                        value: 'female',
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "female",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  buildGenderImage(
-                    image: Image.asset('assets/images/female.png'),
-                    value: 'female',
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "female",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 25),
-          buildRangeButton("Your Height (cm)", heightController),
-          SizedBox(height: 25),
-          buildRangeButton("Your Weight (kg)", weightController),
-          SizedBox(height: 25),
-          Container(
-            margin: EdgeInsets.only(top: 35, left: 35, right: 35),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Color(0xFF484783),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                      create: (context) => BMiCalcCubit(),
-                      child: BlocConsumer<BMiCalcCubit, BMiCalcState>(
-                        listener: (context, state) {},
-                        builder: (context, state) {
-                          return ResultScreen(
+              SizedBox(height: 25),
+              buildRangeButton("Your Height (cm)", heightController),
+              SizedBox(height: 25),
+              buildRangeButton("Your Weight (kg)", weightController),
+              // SizedBox(height: 25),
+              // Spacer(),
+              Container(
+                margin: EdgeInsets.only(top: 35, left: 35, right: 35),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color(0xFF484783),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ResultScreen(
                             fullName: nameController.text,
                             age: ageController.text,
                             height: double.parse(heightController.text),
                             weight: double.parse(weightController.text),
-                          );
-                        },
-                      ),
-                    ),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    'Calculate BMI',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
-                );
-              },
-              child: Text(
-                'Calculate BMI',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
               ),
-            ),
+              SizedBox(height: 20),
+              // SizedBox(height: 3),
+            ],
           ),
-          // SizedBox(height: 3),
-        ],
+        ),
       ),
     );
   }
@@ -175,6 +178,7 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
   Widget buildFormField({
     String? labelText,
     Widget? icon,
+    TextEditingController? controller,
     // TextInputType? input,
   }) {
     return Padding(
@@ -182,6 +186,14 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
 
       /// using TextFormField to create a form field
       child: TextFormField(
+        controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter valid value';
+          }
+          return null;
+          // return null;
+        },
         // controller: labelText,
         // keyboardType: input!,
         decoration: InputDecoration(
@@ -236,6 +248,16 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
             ),
             height: 60,
             child: TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  'Please enter a valid value';
+                }
+                final num = int.tryParse(value!);
+                if (num == null || num <= 0) {
+                  'Please enter a positive number';
+                }
+                return null;
+              },
               textAlign: TextAlign.center,
               controller: controller,
               keyboardType: TextInputType.number,
