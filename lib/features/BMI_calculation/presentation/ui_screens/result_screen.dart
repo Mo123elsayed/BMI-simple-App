@@ -1,12 +1,42 @@
-import 'package:first_app/core/screens/intro_screen.dart';
+import 'package:first_app/features/BMI_calculation/presentation/ui_screens/intro_screen.dart';
 import 'package:first_app/core/themes/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:first_app/features/BMI_calculation/presentation/controllers/bmi_calc_cubit/cubit/bmi_calc_cubit.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   // const ResultScreen({super.key});
   static const screenRoute = '/result-screen';
 
-  const ResultScreen({super.key});
+  final String? fullName;
+  final String?
+  age; // Assuming age is a string, you can change it to int if needed
+  final double? height;
+  final double? weight;
+
+  const ResultScreen({super.key, 
+    this.fullName,this.age,this.height,this.weight,
+  });
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  late double bmiResult;
+  late String name;
+  late String age;
+
+  @override
+  void initState() {
+    bmiResult = context.read<BMiCalcCubit>().calculateBMI(
+      height: widget.height!,
+      weight: widget.weight!,
+    );
+    name = context.read<BMiCalcCubit>().getName(name: widget.fullName!);
+    age = context.read<BMiCalcCubit>().getAge(age: widget.age!);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +87,7 @@ class ResultScreen extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(top: 30),
                             child: Text(
-                              'Samy Call',
+                              name,
                               style: TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 1.5,
@@ -70,7 +100,7 @@ class ResultScreen extends StatelessWidget {
                             padding: EdgeInsets.only(left: 20),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'A 23 years old male',
+                              'A $age years old male',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
@@ -82,11 +112,12 @@ class ResultScreen extends StatelessWidget {
                           Column(
                             children: [
                               Container(
+                                padding: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  '16.5',
+                                  bmiResult.toStringAsFixed(2),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 35,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -113,7 +144,7 @@ class ResultScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       child: Text(
-                                        '180 cm',
+                                        '${widget.height} cm',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 23,
@@ -144,7 +175,7 @@ class ResultScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       child: Text(
-                                        '70 kg',
+                                        '${widget.weight} kg',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 23,
@@ -170,14 +201,14 @@ class ResultScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(width: 48),
+                    SizedBox(width: 30),
                     Container(
                       padding: EdgeInsets.only(right: 5),
                       alignment: Alignment.centerRight,
                       child: Image.asset(
                         'assets/images/body.png',
-                        height: 280,
-                        width: 83.6,
+                        // height: 280,
+                        // width: 83.6,
                       ),
                     ),
                   ],

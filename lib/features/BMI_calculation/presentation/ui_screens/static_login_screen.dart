@@ -1,9 +1,11 @@
+import 'package:first_app/features/BMI_calculation/presentation/controllers/bmi_calc_cubit/cubit/bmi_calc_cubit.dart';
 import 'package:first_app/features/BMI_calculation/presentation/ui_screens/result_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StaticLoginScreen extends StatefulWidget {
   // const StaticLoginScreen({super.key});
-  static const screenRoute = '/login-screen';
+  static const screenRoute = '/';
 
   const StaticLoginScreen({super.key});
 
@@ -12,6 +14,9 @@ class StaticLoginScreen extends StatefulWidget {
 }
 
 class _StaticLoginScreenState extends State<StaticLoginScreen> {
+  /// Controllers for the input fields
+  TextEditingController nameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
@@ -41,7 +46,7 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
           ),
           SizedBox(height: 25),
           buildFormField(
-            labelText: 'Age',
+            labelText: 'ageController',
             icon: Icon(Icons.calendar_today, color: Colors.black),
             // input: TextInputType.number,
           ),
@@ -108,7 +113,24 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
             ),
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(ResultScreen.screenRoute);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => BMiCalcCubit(),
+                      child: BlocConsumer<BMiCalcCubit, BMiCalcState>(
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          return ResultScreen(
+                            fullName: nameController.text,
+                            age: ageController.text,
+                            height: double.parse(heightController.text),
+                            weight: double.parse(weightController.text),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
               },
               child: Text(
                 'Calculate BMI',
@@ -160,9 +182,13 @@ class _StaticLoginScreenState extends State<StaticLoginScreen> {
 
       /// using TextFormField to create a form field
       child: TextFormField(
+        // controller: labelText,
         // keyboardType: input!,
         decoration: InputDecoration(
-          labelText: '$labelText',
+          label: Text(
+            '$labelText',
+            style: TextStyle(color: Colors.grey[700], fontSize: 16),
+          ),
           labelStyle: TextStyle(color: Colors.grey[700], fontSize: 16),
           floatingLabelStyle: TextStyle(
             color: Colors.black,

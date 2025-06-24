@@ -1,4 +1,4 @@
-import 'package:first_app/core/screens/static_login_screen.dart';
+import 'package:first_app/features/BMI_calculation/presentation/ui_screens/static_login_screen.dart';
 import 'package:flutter/material.dart';
 /// This screen is the introduction screen for the app.
 class IntroScreen extends StatelessWidget {
@@ -103,8 +103,6 @@ class IntroScreen extends StatelessWidget {
             top: 150,
             child: Container(
               decoration: BoxDecoration(),
-              // alignment: Alignment.bottomCenter,
-              // padding: EdgeInsets.only(left: 20, right: 20),
               child: Image.asset(
                 'assets/images/BMI_image.png',
                 width: 450,

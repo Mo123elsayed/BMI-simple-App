@@ -1,9 +1,9 @@
 import 'package:first_app/features/BMI_calculation/presentation/controllers/bmi_calc_cubit/cubit/bmi_calc_cubit.dart';
 import 'package:first_app/features/BMI_calculation/presentation/ui_screens/result_screen.dart';
-import 'package:first_app/core/screens/static_login_screen.dart';
+import 'package:first_app/features/BMI_calculation/presentation/ui_screens/static_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocProvider;
-import 'core/screens/intro_screen.dart';
+import 'features/BMI_calculation/presentation/ui_screens/intro_screen.dart';
 
 void main() {
   runApp(FirstApp());
@@ -29,9 +29,8 @@ class FirstApp extends StatelessWidget {
       ),
       routes: {
         '/': (ctx) => IntroScreen(),
-        StaticLoginScreen.screenRoute: (context) => StaticLoginScreen(),
+        // StaticLoginScreen.screenRoute: (context) => StaticLoginScreen(),
         ResultScreen.screenRoute: (context) => BlocProvider(
-  
           create: (context) => BMiCalcCubit(),
           child: ResultScreen(),
         ),
