@@ -14,6 +14,9 @@ A simple and clean Flutter application to calculate **Body Mass Index (BMI)** ba
 ---
 
 ## 📸 Preview
+![Screenshot_1751357328](https://github.com/user-attachments/assets/2e7ab528-b2f0-40c5-9587-a4cd598ebcc9)
+![Screenshot_1751357300](https://github.com/user-attachments/assets/b0caabee-f728-415a-ab35-4f991ed39e25)
+![Screenshot_1751351900](https://github.com/user-attachments/assets/b4202a4c-1990-45f7-a333-e4e69d7ae7c2)
 
 
 
