@@ -14,13 +14,11 @@ A simple and clean Flutter application to calculate **Body Mass Index (BMI)** ba
 ---
 
 ## 📸 Preview
-![Screenshot_1751357328](https://github.com/user-attachments/assets/2e7ab528-b2f0-40c5-9587-a4cd598ebcc9)
-![Screenshot_1751357300](https://github.com/user-attachments/assets/b0caabee-f728-415a-ab35-4f991ed39e25)
-![Screenshot_1751351900](https://github.com/user-attachments/assets/b4202a4c-1990-45f7-a333-e4e69d7ae7c2)
 
 
+![Screenshot_1751351900](https://github.com/user-attachments/assets/07c8c904-c8f2-4757-9aa1-429af0df0a33)
+![Screenshot_1751357328](https://github.com/user-attachments/assets/1c49e7c7-9fbf-4651-9c30-743737317e8b)
 
----
 
 ## 🛠️ Built With
 
@@ -35,15 +33,18 @@ A simple and clean Flutter application to calculate **Body Mass Index (BMI)** ba
 ---
 
 ## 📂 Folder Structure
+![Screenshot_1751357300](https://github.com/user-attachments/assets/cdf315f2-9e62-4884-89b0-21e0ad159531)
 
 ```
 lib/
-│
+│![Screenshot_1751357328](https://github.com/user-attachments/assets/09314312-4fde-4b7d-b472-053279569297)
+
 ├── core/             # Global config, themes, constants
 ├── data/             # Models, repositories, and data sources
 ├── domain/           # Entities and use cases
 ├── presentation/     # UI (screens, widgets, blocs)
-└── main.dart         # App entry point
+└──![Screenshot_1751357300](https://github.com/user-attachments/assets/a53c0c2e-4138-4b3e-b611-7287f856f14e)
+ main.dart         # App entry point
 ```
 
 ---
