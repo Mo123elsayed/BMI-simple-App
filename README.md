@@ -15,13 +15,11 @@ A simple and clean Flutter application to calculate **Body Mass Index (BMI)** ba
 
 ## 📸 Preview
 
-
-![Screenshot_1751351900]()
-<img src="https://github.com/user-attachments/assets/07c8c904-c8f2-4757-9aa1-429af0df0a33?raw=true" width="400"/>
-
-![Screenshot_1751357328](https://github.com/user-attachments/assets/1c49e7c7-9fbf-4651-9c30-743737317e8b)
-![Screenshot_1751357300](https://github.com/user-attachments/assets/cdf315f2-9e62-4884-89b0-21e0ad159531)
-
+<p align = "center">
+<img src="https://github.com/user-attachments/assets/07c8c904-c8f2-4757-9aa1-429af0df0a33?raw=true" width="300"/>
+<img src="https://github.com/user-attachments/assets/1c49e7c7-9fbf-4651-9c30-743737317e8b?raw=true" width = "300"/>
+<img src="https://github.com/user-attachments/assets/cdf315f2-9e62-4884-89b0-21e0ad159531?raw=true" width = "300"/>
+</p>
 
 ## 🛠️ Built With
 
